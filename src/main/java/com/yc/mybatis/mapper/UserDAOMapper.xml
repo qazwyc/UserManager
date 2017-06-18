@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yc.mybatis.mapper.UserDAO">  
+	<!-- 用户总数 + 账号和名称匹配 -->
+    <select id="getCount" resultType="int">  
+        select count(*) from user where name like #{search_name} and account like #{search_account}
+    </select> 
+    <!-- 查询用户 + 分页 + 按账号和名称匹配 -->
+    <select id="getAllUsers" resultType="com.yc.po.User">  
+        select * from user where name like #{search_name} and account like #{search_account} limit #{skip},#{size}
+    </select>   
+    <!--新增用户 -->
+    <insert id="addUser" parameterType="User">
+        insert into user(name,account,phone,email,address) values(#{name},#{account},#{phone},#{email},#{address});
+    </insert>
+    <!-- 更新用户 -->
+    <update id="updateUser" parameterType="User">
+        update user set name=#{name},account=#{account},phone=#{phone},email=#{email},address=#{address} where id=#{id}
+    </update>
+    <!--删除用户 -->
+    <delete id="deleteUserById" parameterType="int">
+    	 delete from user where id=#{id}
+    </delete>
+</mapper>  
